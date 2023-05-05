@@ -1,0 +1,21 @@
+{
+  "name": "v14-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/bot.js",
+  "scripts": {
+    "test": "node ."
+  },
+  "keywords": [],
+  "author": "happyandy",
+  "license": "ISC",
+  "dependencies": {
+    "@discordjs/rest": "^1.6.0",
+    "chalk": "^4.1.2",
+    "discord-api-types": "^0.37.36",
+    "discord.js": "^14.8.0",
+    "dotenv": "^16.0.3",
+    "fs": "^0.0.1-security",
+    "nodemailer": "^6.9.1"
+  }
+}
