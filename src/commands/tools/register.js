@@ -1,5 +1,8 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { nodemailer } = require('nodemailer')
+const { ModalBuilder, ActionRowBuilder, TextInputBuilder, TextInputStyle } = require('discord.js'); 
+const nodemailer = require('nodemailer')
+const { token } = require('../../../data/password.json')
+let fs = require('fs'); 
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -12,43 +15,79 @@ module.exports = {
         ),
     async execute(interaction, client) {
         const result = interaction.options.getString('email');
+        const name = interaction.user.username;
+        const id = interaction.user.id;
         const suffix = "@nptu.edu.tw";
-        var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-        if (!regex.test(result)) {
-            await interaction.reply('請輸入正確的email格式<:cat_shot:1055350455296868454>');
+        const randomNumberString = Math.floor(Math.random() * 900000) + 100000 + '';
+        var regex_1 = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        var regex_2 = /^[a-z]{3}\d{6}@nptu.edu.tw$/;
+        if (!regex_1.test(result)) {
+            await interaction.reply({
+                content: '請輸入正確的email格式<:cat_shot:1055350455296868454>',
+                ephemeral: true
+            });
             return;
         }
-        if (!result.endsWith(suffix)) {
-            await interaction.reply('請使用學校信箱<:cat_ya:1055355023070068736>');
+        if (!regex_2.test(result)) {
+            await interaction.reply({
+                content: '請使用學校信箱<:cat_ya:1055355023070068736>',
+                ephemeral: true
+            });
             return;
         }
         const transporter = nodemailer.createTransport({
             host: 'smtp.gmail.com',
             port: 465,
             auth: {
-                user: 'serversmallassistant@gmail.com',
-                pass: ,
+                user: token.name,
+                pass: token.pass,
             },
         })
-
         transporter.sendMail({
-          from: token.test.name, // 寄件人
-          to: result, // 收件人 多位用,分開 例:'a@XXX, b@XXX, c@XXX'
-          subject: '驗證碼', // 輸入信件主旨
-          html: '', // 輸入信件內容 文字用text HTML用html
-          /*attachments: [{
-            filename: 'a.txt',
-            path: 'C:/Users/andym/OneDrive/桌面/JavaScript/smpt mail/a.txt'
-        },
-          {
-            filename: 'b.txt',
-            path: 'C:/Users/andym/OneDrive/桌面/JavaScript/smpt mail/b.txt'
-        },
-        ]*/
+          from: token.name,
+          to: result,
+          subject: '驗證碼',
+          text: randomNumberString,
+        })
 
-        }).then(info => {
-          console.log({ info })
-        }).catch(console.error)
+        let newUser = {
+            "name": name,
+            "ID": id,
+            "Email": result,
+            "pass": randomNumberString
+        }
+        fs.readFile('./data/verification.json', function (err, UserInfo) {
+            if (err) {
+                return console.error(err);
+            }
+            let user = UserInfo.toString();
+            user = JSON.parse(user);
+            for (let i = 0; i < user.UserInfo.length; i++) {
+                if (id == user.UserInfo[i].ID) {
+                    user.UserInfo.splice(i, 1);
+                }
+            }
+            user.UserInfo.push(newUser);
+            let str = JSON.stringify(user, null, 2);
+            fs.writeFile('./data/verification.json', str, function (err) {
+                if (err) {
+                    console.error(err);
+                }
+            })
+        })
 
+        const modal = new ModalBuilder()
+            .setCustomId(`verification`)
+            .setTitle(`驗證碼`)
+
+        const textInput = new TextInputBuilder()
+            .setCustomId('verificationInput')
+            .setLabel(`請輸入驗證碼`)
+            .setRequired(true)
+            .setStyle(TextInputStyle.Short)
+
+        modal.addComponents(new ActionRowBuilder().addComponents(textInput));
+
+        await interaction.showModal(modal)
     }
 }
