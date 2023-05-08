@@ -1,5 +1,6 @@
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, Embed } = require('discord.js');
 const { cpe } = require('../../../data/cpe')
+const { all } = require('../../../data/roles')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -49,6 +50,20 @@ module.exports = {
 
     async execute(interaction, client) {
         const result = interaction.options.getInteger('題號');
+        var allow = false
+        all.forEach(function(element) {
+            var hasRole = interaction.member.roles.cache.get(element);
+            if (hasRole) {
+                allow = true
+            }
+        });
+        if (allow === false) {
+            await interaction.reply({
+                content: '請先註冊會員',
+                ephemeral: true
+            })
+            return;
+        }
         const embed = new EmbedBuilder()
             .setTitle(`UVA${result}`)
             .setDescription('呼叫CPE')

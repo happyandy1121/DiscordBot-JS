@@ -23,6 +23,7 @@ module.exports = {
                             "name": name,
                             "ID": id,
                             "Email": user.UserInfo[i].Email,
+                            "language": "zh-tw"
                         }
                         fs.readFile('./data/user.json', function (err, UserInfo) {
                             if (err) {
@@ -47,6 +48,7 @@ module.exports = {
                             content: "註冊成功<:cat_drink:1055354431782273075>",
                             ephemeral: true
                         })
+                        client.member.roles.add("1055031237313560626");
                     } else {
                         user.UserInfo.splice(i, 1);
                         let str = JSON.stringify(user, null, 2);
