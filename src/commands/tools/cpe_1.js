@@ -50,9 +50,9 @@ module.exports = {
 
     async execute(interaction, client) {
         const result = interaction.options.getInteger('題號');
-        var allow = false
+        let allow = false
         all.forEach(function(element) {
-            var hasRole = interaction.member.roles.cache.get(element);
+            let hasRole = interaction.member.roles.cache.get(element);
             if (hasRole) {
                 allow = true
             }
