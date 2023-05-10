@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, Embed } = require('discord.js');
 const { cpe } = require('../../../data/cpe')
-const { all } = require('../../../data/roles')
+const { mao, all } = require('../../../data/roles')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -92,7 +92,7 @@ module.exports = {
                 components: [new ActionRowBuilder().addComponents(button)],
                 ephemeral: true
             });
-            await client.users.fetch('584315794012241933').then((user) => {
+            await client.users.fetch(mao).then((user) => {
                 user.send({
                     embeds: [embed],
                 });

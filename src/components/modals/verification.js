@@ -1,4 +1,5 @@
 const { EmbedBuilder, Embed } = require('discord.js');
+const { platinum } = require('../../../data/roles')
 let fs = require('fs'); 
 
 module.exports = {
@@ -48,7 +49,7 @@ module.exports = {
                             content: "註冊成功<:cat_drink:1055354431782273075>",
                             ephemeral: true
                         })
-                        client.member.roles.add("1055031237313560626");
+                        client.member.roles.add(platinum);
                     } else {
                         user.UserInfo.splice(i, 1);
                         let str = JSON.stringify(user, null, 2);
