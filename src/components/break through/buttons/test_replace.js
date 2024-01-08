@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
-const { level, BUTTON_DICT } = require('../../../data/level')
+const { level, BUTTON_DICT } = require('../../../../data/level')
 let fs = require('fs');
 
 const createButton = (customId, label, ButtonStyle, vaule) => {

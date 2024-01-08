@@ -1,5 +1,5 @@
 const { EmbedBuilder, Embed } = require('discord.js');
-const { platinum } = require('../../../data/roles')
+const { platinum } = require('../../../../data/roles')
 let fs = require('fs'); 
 
 module.exports = {
