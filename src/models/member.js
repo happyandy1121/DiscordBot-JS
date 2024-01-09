@@ -6,7 +6,15 @@ const Member = sequelize.define('member', {
         type: Sequelize.STRING,
         primaryKey: true
     },
-    name: {
+    guildName: {
+        type: Sequelize.STRING,
+        allowNull: true
+    },
+    rpgName: {
+        type: Sequelize.STRING,
+        allowNull: true
+    },
+    gender: {
         type: Sequelize.STRING,
         allowNull: true
     },

@@ -4,22 +4,40 @@ const Member = require('../../models/member')
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('rpg_register')
-        .setDescription('註冊RPG帳號'),
+        .setDescription('註冊RPG帳號')
+        .addStringOption(option =>
+            option.setName('性別')
+            .setDescription('請選擇性別')
+            .setRequired(true)
+            .addChoices(
+                { name: '男', value: '男' }, 
+                { name: '女', value: '女' }, 
+            )
+        )
+        .addStringOption(option =>
+            option.setName('名字')
+            .setDescription('請輸入冒險家名稱')
+            .setRequired(true)
+        ),
         
     async execute(interaction, client) {
+        const gender = interaction.options.getString('性別');
+        const rpgName = interaction.options.getString('名字');
         const userID = interaction.user.id
         const userName = interaction.user.globalName
         const guildID = interaction.guild.id
         
         try {
             const exist = await Member.findOne({ where: { id: userID } })
-            if (exist) {
-                await interaction.reply({ content: '你已經註冊過了', ephemeral: true })
-                await exist.update({ name: userName })
-            }
+            if (exist) await interaction.reply({ content: '你已經註冊過了', ephemeral: true })
             else{
                 const [ member, creat ] = await Member.findOrCreate({ where: { id: userID } })
-                await member.update({ name: userName, guildID: guildID })
+                await member.update({ 
+                    guildName: userName, 
+                    rpgName: rpgName, 
+                    gender: gender, 
+                    guildID: guildID 
+                })
                 await interaction.reply({ content: '帳號註冊成功', ephemeral: true })
             }
         } catch (error) {
