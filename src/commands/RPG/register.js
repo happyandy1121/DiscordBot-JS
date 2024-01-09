@@ -30,7 +30,7 @@ module.exports = {
         try {
             const exist = await Member.findOne({ where: { id: userID } })
             if (exist) await interaction.reply({ content: '你已經註冊過了', ephemeral: true })
-            else{
+            else {
                 const [ member, creat ] = await Member.findOrCreate({ where: { id: userID } })
                 await member.update({ 
                     guildName: userName, 
