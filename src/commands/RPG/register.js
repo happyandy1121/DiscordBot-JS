@@ -12,18 +12,15 @@ module.exports = {
         const guildID = interaction.guild.id
         
         try {
-            const exist = await Member.findAll({ where: { id: userID } })
-            if (exist) await interaction.reply({content: '你已經註冊過了', ephemeral: true})
+            const exist = await Member.findOne({ where: { id: userID } })
+            if (exist) {
+                await interaction.reply({ content: '你已經註冊過了', ephemeral: true })
+                await exist.update({ name: userName })
+            }
             else{
                 const [ member, creat ] = await Member.findOrCreate({ where: { id: userID } })
-                await member.update({ 
-                    name: userName,
-                    guildID: guildID
-                })
-                await interaction.reply({
-                    content: '帳號註冊成功',
-                    ephemeral: true
-                })
+                await member.update({ name: userName, guildID: guildID })
+                await interaction.reply({ content: '帳號註冊成功', ephemeral: true })
             }
         } catch (error) {
             await interaction.reply({
