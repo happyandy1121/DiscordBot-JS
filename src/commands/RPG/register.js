@@ -1,5 +1,6 @@
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, TextInputBuilder, TextInputStyle, EmbedBuilder, Embed } = require('discord.js');
 const Member = require('../../models/member')
+const Exp = require('../../models/exp')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -31,12 +32,21 @@ module.exports = {
             const exist = await Member.findOne({ where: { id: userID } })
             if (exist) await interaction.reply({ content: '你已經註冊過了', ephemeral: true })
             else {
-                const [ member, creat ] = await Member.findOrCreate({ where: { id: userID } })
+                const [ member, creat1 ] = await Member.findOrCreate({ where: { id: userID } })
                 await member.update({ 
                     guildName: userName, 
                     rpgName: rpgName, 
                     gender: gender, 
                     guildID: guildID 
+                })
+                const [ exp, creat2 ] = await Exp.findOrCreate({ where: { id: userID } })
+                await exp.update({ 
+                    rpgLevel: '1',
+                    farmLevel: '1 0',
+                    mineLevel: '1 0',
+                    logLevel: '1 0',
+                    fishLevel: '1 0',
+                    makeLevel: '1 0'
                 })
                 await interaction.reply({ content: '帳號註冊成功', ephemeral: true })
             }
