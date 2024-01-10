@@ -10,15 +10,12 @@ module.exports = {
         .addUserOption(option =>
             option.setName('玩家')
             .setDescription('請選擇玩家')
+            .setRequired(true)
         ),
         
     async execute(interaction, client) {
         try {
             const result = interaction.options.getUser('玩家');
-            if (!result) {
-                await interaction.reply({ content: '請輸入玩家', ephemeral: true })
-                return
-            }
             const exist = await Member.findOne({ where: { id: result.id } })
             const expUser = await Exp.findOne({ where: { id: result.id } })
             if (!exist) {
