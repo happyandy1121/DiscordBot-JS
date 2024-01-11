@@ -48,7 +48,6 @@ module.exports = {
             }
 
             if (work) {
-                console.log(expAdd(expUser, work, num))
                 if (work === 'farmLevel') {
                     await expUser.update({ farmLevel: expAdd(expUser, work, num) });
                     await interaction.reply({ content: '經驗值更改成功' })
