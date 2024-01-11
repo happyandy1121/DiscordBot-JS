@@ -37,10 +37,10 @@ module.exports = {
         
     async execute(interaction, client) {
         try {
+            if ((interaction.user.id !== '584315794012241933') || (interaction.user.id !== '595136149354446858')) return
             const work = interaction.options.getString('work');
             const num = interaction.options.getString('num');
             const result = interaction.options.getUser('player');
-            if (result.id !== '584315794012241933') return
             const expUser = await Exp.findOne({ where: { id: result.id } })
             if (!expUser) {
                 await interaction.reply({ content: '查無此玩家資料', ephemeral: true })
