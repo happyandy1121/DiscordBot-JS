@@ -22,7 +22,10 @@ module.exports = (client) => {
         try {
             console.log('正在更新 (/) 指令');
             
-            await rest.put(Routes.applicationGuildCommands(robot, guildId), { 
+            await rest.put(Routes.applicationGuildCommands(robot, guildId[0]), { 
+                body: client.commandArray,
+            });
+            await rest.put(Routes.applicationGuildCommands(robot, guildId[1]), { 
                 body: client.commandArray,
             });
             
