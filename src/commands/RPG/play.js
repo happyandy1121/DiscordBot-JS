@@ -132,9 +132,6 @@ module.exports = {
                     playerMessage[playerID] = ''
                 }, 30000);
             }
-            
-
-            
 
         } catch (error) {
             await interaction.reply({
