@@ -116,11 +116,13 @@ module.exports = {
 
                 playerMessage[playerID] = `https://discord.com/channels/${guildID}/${channelID}/${message.id}`
 
-                setTimeout (function () {
-                    row1.components.forEach(function(a) { a.setDisabled(true) })
+                const collectorFilter = i => i.user.id === interaction.user.id;
+                try {
+                	const confirmation = await message.awaitMessageComponent({ filter: collectorFilter, time: 10_000 });
+                    if (confirmation) return
+                } catch (e) {
+                	row1.components.forEach(function(a) { a.setDisabled(true) })
                     row2.components.forEach(function(b) { b.setDisabled(true) })
-                    //row1.components[0].setDisabled(true);
-                    //row2.components[0].setDisabled(true);
                     interaction.editReply({ 
                         embeds: [embed],
                         components: [
@@ -130,7 +132,7 @@ module.exports = {
                         fetchReply: true
                     })
                     playerMessage[playerID] = ''
-                }, 30000);
+                }
             }
 
         } catch (error) {
@@ -139,5 +141,8 @@ module.exports = {
                 ephemeral: true
             });
         }
-    }
+    },
+    playerMessage,
+    LocNameDIC,
+    LocPicDIC
 }
