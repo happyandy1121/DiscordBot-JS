@@ -81,7 +81,7 @@ module.exports = {
         } catch (e) {
         	row1.components.forEach(function(a) { a.setDisabled(true) })
             row2.components.forEach(function(b) { b.setDisabled(true) })
-            await interaction.update({ 
+            await interaction.message.edit({ 
                 embeds: [embed],
                 components: [row1, row2],
                 fetchReply: true

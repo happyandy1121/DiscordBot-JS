@@ -54,7 +54,7 @@ module.exports = {
             if (confirmation) return
         } catch (e) {
         	row1.components.forEach(function(a) { a.setDisabled(true) })
-            await interaction.update({ 
+            await interaction.message.edit({ 
                 embeds: [embed],
                 components: [row1],
                 fetchReply: true
