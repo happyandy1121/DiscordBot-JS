@@ -1,26 +1,8 @@
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, TextInputBuilder, TextInputStyle, EmbedBuilder, Embed } = require('discord.js');
 const Member = require('../../models/member')
-const Exp = require('../../models/exp')
-const { info } = require('../../../data/RPG/exp')
-const { farm, farmButton } = require('../../../data/RPG/farm')
+const { farmEmbed, farmButton } = require('../../../data/RPG/farm')
 
 const playerMessage = {}
-
-const LocPicDIC = {
-	'townLoc': 'https://i.imgur.com/N3aJ9Kh.jpg',
-	'farmLoc': 'https://i.imgur.com/FPkQfH7.jpg',
-	'mineLoc': 'https://i.imgur.com/7TFsgIK.jpg',
-	'logLoc': 'https://i.imgur.com/9MdYif1.jpg',
-	'fishLoc': 'https://i.imgur.com/13xNFZR.jpg',
-}
-
-const LocNameDIC = {
-	'townLoc': '天極古城',
-	'farmLoc': '綠幻平原',
-	'mineLoc': '晶石礦坑',
-	'logLoc': '憂鬱林場',
-	'fishLoc': '星河海灣',
-}
 
 const createButton = (customId, label, ButtonStyle, vaule) => {
 	return new ButtonBuilder()
@@ -70,11 +52,11 @@ module.exports = {
 				return
 			}
 
-			if (loc === 'townLoc') { var ans = town() }
-			else if (loc === 'farmLoc') { var ans = farm() }
-			else if (loc === 'mineLoc') { var ans = mine() }
-			else if (loc === 'logLoc') { var ans = log() }
-			else if (loc === 'fishLoc') { var ans = fish() }
+			if (loc === 'townLoc') { var ans = townEmbed(loc) }
+			else if (loc === 'farmLoc') { var embed = farmEmbed(loc) }
+			else if (loc === 'mineLoc') { var embed = mineEmbed(loc) }
+			else if (loc === 'logLoc') { var embed = logEmbed(loc) }
+			else if (loc === 'fishLoc') { var embed = fishEmbed(loc) }
 
 			if (playerMessage[playerID]) {
 				await interaction.reply({
@@ -83,18 +65,6 @@ module.exports = {
 				})
 			}
 			else {
-				const embed = new EmbedBuilder()
-					.setTitle(`還沒想到.w.`)
-					.setAuthor({
-						name: LocNameDIC[loc],
-						//iconURL: interaction.user.displayAvatarURL(),
-					})
-					.setThumbnail(LocPicDIC[loc])
-					.addFields({ name: ans[0], value: ans[2], inline: true })
-					.addFields({ name: ans[1], value: ans[3], inline: true })
-					.addFields({ name: '還沒想到.w.', value: '3', inline: true })
-					.setColor(0x00ffff)
-
 				const row1 = button_creater(farmButton["button1"])
 				const row2 = button_creater(farmButton["button2"])
 
@@ -129,7 +99,5 @@ module.exports = {
 			});
 		}
 	},
-	playerMessage,
-	LocNameDIC,
-	LocPicDIC
+	playerMessage
 }
