@@ -1,6 +1,7 @@
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, TextInputBuilder, TextInputStyle, EmbedBuilder, Embed } = require('discord.js');
 const Member = require('../../models/member')
 const { farmEmbed, farmButton } = require('../../../data/RPG/farm')
+const { townEmbed, townButton } = require('../../../data/RPG/town')
 
 const playerMessage = {}
 
@@ -19,6 +20,14 @@ const button_creater = (args) => {
 		buttons.push(createButton(args[i], args[i + 1], args[i + 2], args[i + 3]));
 	}
 	return new ActionRowBuilder().addComponents(buttons)
+}
+
+const locDIC = {
+	'townLoc': townButton,
+	'farmLoc': farmButton,
+	//'mineLoc': mineButton,
+	//'logLoc': logButton,
+	//'fishLoc': fishButton,
 }
 
 module.exports = {
@@ -52,11 +61,14 @@ module.exports = {
 				return
 			}
 
-			if (loc === 'townLoc') { var ans = townEmbed(loc) }
+			if (loc === 'townLoc') { var embed = townEmbed(loc) }
 			else if (loc === 'farmLoc') { var embed = farmEmbed(loc) }
 			else if (loc === 'mineLoc') { var embed = mineEmbed(loc) }
 			else if (loc === 'logLoc') { var embed = logEmbed(loc) }
 			else if (loc === 'fishLoc') { var embed = fishEmbed(loc) }
+
+			const row1 = button_creater(locDIC[loc]["button1"])
+			const row2 = button_creater(locDIC[loc]["button2"])
 
 			if (playerMessage[playerID]) {
 				await interaction.reply({
@@ -65,9 +77,6 @@ module.exports = {
 				})
 			}
 			else {
-				const row1 = button_creater(farmButton["button1"])
-				const row2 = button_creater(farmButton["button2"])
-
 				const message = await interaction.reply({
 					embeds: [embed],
 					components: [row1, row2],
