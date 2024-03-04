@@ -2,7 +2,7 @@ const Sequelize = require('sequelize')
 const sequelize = require('../utils/database')
 
 const Item = sequelize.define('item', {
-	id: {
+	itemId: {
 		type: Sequelize.STRING,
 		primaryKey: true
 	},
@@ -14,11 +14,11 @@ const Item = sequelize.define('item', {
 		type: Sequelize.STRING,
 		allowNull: true
 	},
-	level: {
+	level: { // 等級限制
 		type: Sequelize.STRING,
 		allowNull: true
 	},
-	pic: {
+	pic: { // 貼圖
 		type: Sequelize.STRING,
 		allowNull: true
 	},

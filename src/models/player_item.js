@@ -6,11 +6,15 @@ const PlayerItem = sequelize.define('playerItem', {
 		type: Sequelize.STRING,
 		primaryKey: true
 	},
-	id: {
+	userId: {
 		type: Sequelize.STRING,
 		allowNull: true
 	},
 	itemID: {
+		type: Sequelize.STRING,
+		allowNull: true
+	},
+	itemType: {
 		type: Sequelize.STRING,
 		allowNull: true
 	},
