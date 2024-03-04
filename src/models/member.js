@@ -21,6 +21,10 @@ const Member = sequelize.define('member', {
 	guildID: {
 		type: Sequelize.STRING,
 		allowNull: true
+	},
+	money: {
+		type: Sequelize.INTEGER,
+		allowNull: true
 	}
 })
 

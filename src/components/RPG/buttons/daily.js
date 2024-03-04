@@ -2,6 +2,7 @@ const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, TextI
 const { playerMessage } = require('../../../commands/RPG/play')
 const { townEmbed, townButton } = require('../../../../data/RPG/town')
 const Daily = require('../../../models/daily')
+const Member = require('../../../models/member')
 
 function difference(date1, date2) {
   const date1utc =
@@ -43,6 +44,7 @@ module.exports = {
     const playerID = interaction.user.id
     const row1 = button_creater(Button["button1"])
     const user = await Daily.findOne({ where: { id: playerID } })
+    const member = await Member.findOne({ where: { id: playerID } })
 
     if (user) {
       const lastDailyDate = user.lastDaily
@@ -62,6 +64,7 @@ module.exports = {
           continued: user.continued + 1,
           lastDaily: new Date()
         })
+        member.update({ money: member.money + 100 })
         var message = await interaction.update({
           content: `簽到成功，簽到累積**${user.continued}**天`,
           embeds: [],
@@ -74,6 +77,7 @@ module.exports = {
           continued: 1,
           lastDaily: new Date()
         })
+        member.update({ money: member.money + 100 })
         var message = await interaction.update({
           content: `簽到成功，距離上次簽到超過一天，天數重新累積`,
           embeds: [],

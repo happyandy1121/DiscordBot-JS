@@ -46,7 +46,8 @@ module.exports = {
 					mineLevel: '1 0',
 					logLevel: '1 0',
 					fishLevel: '1 0',
-					makeLevel: '1 0'
+					makeLevel: '1 0',
+					money: 0
 				})
 				await interaction.reply({ content: '帳號註冊成功', ephemeral: true })
 			}
