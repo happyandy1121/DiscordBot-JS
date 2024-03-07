@@ -92,6 +92,13 @@ module.exports = {
         continued: 1,
         lastDaily: new Date()
       })
+      member.update({ money: member.money + 100 })
+      var message = await interaction.update({
+        content: `簽到成功，簽到累積**1**天`,
+        embeds: [],
+        components: [row1],
+        fetchReply: true
+      })
     }
     
     const collectorFilter = i => i.user.id === interaction.user.id;
