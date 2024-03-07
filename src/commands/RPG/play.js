@@ -5,12 +5,12 @@ const { townEmbed, townButton } = require('../../../data/RPG/town')
 
 const playerMessage = {}
 
-const createButton = (customId, label, ButtonStyle, vaule) => {
+const createButton = (customId, label, ButtonStyle, value) => {
 	return new ButtonBuilder()
 		.setCustomId(customId)
 		.setLabel(label)
 		.setStyle(ButtonStyle)
-		.setDisabled(vaule);
+		.setDisabled(value);
 };
 
 const button_creater = (args) => {

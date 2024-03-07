@@ -13,12 +13,12 @@ function difference(date1, date2) {
   return (date2utc - date1utc) / day
 }
 
-const createButton = (customId, label, ButtonStyle, vaule) => {
+const createButton = (customId, label, ButtonStyle, value) => {
 	return new ButtonBuilder()
 		.setCustomId(customId)
 		.setLabel(label)
 		.setStyle(ButtonStyle)
-		.setDisabled(vaule);
+		.setDisabled(value);
 };
 
 const button_creater = (args) => {

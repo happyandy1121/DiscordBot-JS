@@ -2,12 +2,12 @@ const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = re
 const { level } = require('../../../../data/level')
 let fs = require('fs');
 
-const createButton = (customId, label, ButtonStyle, vaule) => {
+const createButton = (customId, label, ButtonStyle, value) => {
 	return new ButtonBuilder()
 		.setCustomId(customId)
 		.setLabel(label)
 		.setStyle(ButtonStyle)
-		.setDisabled(vaule);
+		.setDisabled(value);
 };
 
 const button_creater = (args) => {

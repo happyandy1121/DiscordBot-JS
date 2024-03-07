@@ -1,12 +1,12 @@
 const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, TextInputBuilder, TextInputStyle, EmbedBuilder, Embed } = require('discord.js');
 const { playerMessage } = require('../../../commands/RPG/play')
 
-const createButton = (customId, label, ButtonStyle, vaule) => {
+const createButton = (customId, label, ButtonStyle, value) => {
 	return new ButtonBuilder()
 		.setCustomId(customId)
 		.setLabel(label)
 		.setStyle(ButtonStyle)
-		.setDisabled(vaule);
+		.setDisabled(value);
 };
 
 const button_creater = (args) => {
